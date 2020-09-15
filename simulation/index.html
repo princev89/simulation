@@ -17,11 +17,15 @@
         <div>
             <h1>Objective:</h1>
             <p>To determine the rate constant of the hydrolysis of Ethyl acetate using an acid as acatalyst.</p>
-            <button onclick="startSimulator()">Start</button>
+            <button id="start_button" onclick="startSimulator()">Start</button>
         </div>
     </div>
 
-
+    <div id="alert-div" class="alert-div">
+        <input type="text" id="stepvalue" placeholder="Enter the step number">
+        <button onclick="getStepValue()">OK
+        </button>
+    </div>
 
     <div class="simulator" id="simulator">
         <nav id="simulator_nav">
