@@ -107,7 +107,7 @@ document.getElementById("next").addEventListener("click", function() {
             document.getElementById("animation_burette").style.bottom = "13%";
             document.getElementById("animation_burette").classList.toggle("animation_burette");
             setTimeout(function() {
-                document.getElementById("animation_burette").setAttribute("src", "../images/objects/burette/image_part_017.png");
+                document.getElementById("animation_burette").setAttribute("src", "./images/objects/burette/image_part_017.png");
                 document.getElementById("repeatAgain").style.display = "block";
                 process.innerHTML = "Repeat process " + (6 - localStorage.repeatCount) + " times.";
                 document.getElementById("ouputValue").style.display = "block";
