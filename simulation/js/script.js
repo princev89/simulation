@@ -1,27 +1,19 @@
 var stepno = 0;
 var result = ["0.2 ml (V0)", "5.0 ml", "7.2 ml", "11.1 ml", "13.2ml", "19.3(v∞)"];
-if (!localStorage.repeatCount) {
-    localStorage.setItem("repeatCount", 0);
-} else if (localStorage.repeatCount === 6) {
-    localStorage.setItem("repeatCount", 0);
-}
-step = prompt("Enter the step number, If start new experment enter 1")
-if (step == 1) {
-    localStorage.setItem("repeatCount", 0);
-} else if (step > 1) startSimulator();
-11
+
+
 
 function startSimulator() {
 
     console.log(localStorage.repeatCount);
-    localStorage.repeatCount++;
+    // localStorage.repeatCount++;
     document.getElementById("animation_burette").style.display = "none";
     document.getElementById("repeatAgain").style.display = "none";
     document.getElementById("next").innerHTML = "";
     document.getElementById("ouputValue").style.display = "none";
     main.style.display = "none";
     simulator.style.display = "block";
-    process.innerHTML = "Add Appratus by clicking button name ADD Appratus <br> and select hcl and reagent bottle.";
+    process.innerHTML = "Add Appratus by clicking button named <span>ADD Appratus<span>";
 }
 
 document.getElementById("experimentname").innerHTML = "To determine the rate constant of the hydrolysis of Ethyl acetate using an acid as a catalyst.";
@@ -185,6 +177,7 @@ function showanimate(id) {
 }
 
 function imageId(id) {
+    document.getElementById(id).style.opacity = "0.3";
     var src = "./images/icons/" + id + ".png"
     var elem = document.createElement("img");
     elem.setAttribute("src", src);
@@ -196,9 +189,28 @@ function imageId(id) {
 }
 
 
+if (!localStorage.repeatCount) {
+    localStorage.setItem("repeatCount", 0);
+} else if (localStorage.repeatCount === 6) {
+    localStorage.setItem("repeatCount", 0);
+}
+// step = prompt("Enter the step number, If start new experment enter 1");
+// localStorage.setItem("repeatCount", step);
+// if (step > 1) startSimulator();
+var start_btn = document.getElementById("start_button");
+start_btn.disabled = true;
 
-
-
+function getStepValue() {
+    var value = document.getElementById("stepvalue").value;
+    if (value > 6 || value < 1) {
+        alert("Please input number bewteen 1 - 6");
+    } else {
+        start_btn.disabled = false;
+        document.getElementById("alert-div").style.display = "none";
+        localStorage.setItem("repeatCount", value);
+        if (value > 1) startSimulator();
+    }
+}
 
 google.charts.load('current', { 'packages': ['line'] });
 var item = document.getElementById('graph')
