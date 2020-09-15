@@ -1,7 +1,7 @@
 var stepno = 0;
 var result = ["0.2 ml (V0)", "5.0 ml", "7.2 ml", "11.1 ml", "13.2ml", "19.3(v∞)"];
 
-
+var iscompleted = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 function startSimulator() {
 
@@ -36,12 +36,17 @@ document.getElementById("add_appratus_ok").addEventListener("click", function() 
     }
 });
 document.getElementById("hcl_bottle").addEventListener("click", function() {
+    console.log(iscompleted);
+    isdone(2);
+    iscompleted[2] = 1;
     process.innerHTML = "Select Ethyl Acetate and add into Reagent Bottle";
     stepno = 3;
     document.getElementById("hcl_bottle").classList.toggle("hcl_bottle_animation");
     document.getElementById("reagentbottle").classList.toggle("reagentbottle_animation");
 });
 document.getElementById("ethyleacitate").addEventListener("click", function() {
+    isdone(4);
+    iscompleted[4] = 1;
     document.getElementById("ethyleacitate").classList.toggle("ethyleacitate_bottle_animation");
     process.innerHTML = "Stlr the mixture";
     next.innerHTML = "Strl mixture";
@@ -51,6 +56,8 @@ document.getElementById("ethyleacitate").addEventListener("click", function() {
 document.getElementById("next").addEventListener("click", function() {
     switch (next.className) {
         case "stlr":
+            isdone(5);
+            iscompleted[5] = 1;
             document.getElementById("reagentbottle").classList.toggle("stlr");
             document.getElementById("ethyleacitate").style.display = "none";
             process.innerHTML = "Add 10(ml) of mixture in 100(ml) conical flask containing ice.";
@@ -58,6 +65,8 @@ document.getElementById("next").addEventListener("click", function() {
             next.classList.remove("stlr");
             break;
         case "addphenolpthalein":
+            isdone(7);
+            iscompleted[7] = 1;
             document.getElementById("reagentbottle").style.display = "none";
             document.getElementById("peppet").style.display = "none";
             process.innerHTML = "Bring Conical Flask under the burette.";
@@ -67,6 +76,8 @@ document.getElementById("next").addEventListener("click", function() {
             next.style.display = "none";
             break;
         case "fillnaoh":
+            isdone(10);
+            iscompleted[10] = 1;
             document.getElementById("peppet").classList.remove("animatepeppet");
             document.getElementById("peppet").style.display = "block";
             document.getElementById("peppet").style.left = "45%";
@@ -91,6 +102,8 @@ document.getElementById("next").addEventListener("click", function() {
             drawChart();
             break;
         case "fillnaohdrop":
+            isdone(11);
+            iscompleted[11] = 1;
             document.getElementById("peppet").style.display = "none";
             document.getElementById("naoh").style.display = "none";
             document.getElementById("conical_flask_png").style.display = "none";
@@ -131,9 +144,12 @@ function putOnTable(id) {
 
     switch (id) {
         case 'reagent_bottle_icon':
+            iscompleted[0] = 1;
             document.getElementById("reagentbottle").style.display = "block";
             break;
         case 'conical_flask':
+            isdone(6);
+            iscompleted[6] = 1;
             document.getElementById("conical_flask_png").style.left = "50%";
             document.getElementById("conical_flask_png").style.display = "block";
             document.getElementById("reagentbottle").style.left = "10%";
@@ -145,15 +161,21 @@ function putOnTable(id) {
             next.classList.toggle("addphenolpthalein");
             break;
         case 'ethyleacitate_icon':
+            isdone(3);
+            iscompleted[3] = 1;
             document.getElementById("hcl_bottle").style.display = "none";
             document.getElementById("ethyleacitate").style.display = "block";
             break;
         case 'hcl_bottle_icon':
+            isdone(1);
+            iscompleted[1] = 1;
             process.innerHTML = "Add 100(ml) of 0.1 N HCL into Reagent Bottle";
             stepno = 2;
             document.getElementById("hcl_bottle").style.display = "block";
             break;
         case 'naoh_icon':
+            isdone(9);
+            iscompleted[9] = 1;
             document.getElementById("naoh").style.display = "block";
             process.innerHTML = "Fill the burette with NaOH.";
             next.classList.remove("addphenolpthalein");
@@ -163,6 +185,8 @@ function putOnTable(id) {
             next.innerHTML = "Fill NaOH";
             break;
         case 'burette_icon':
+            isdone(8);
+            iscompleted[8] = 1;
             document.getElementById("burette").style.display = "block";
             document.getElementById("peppet").style.display = "none";
             document.getElementById("conical_flask_png").style.display = "none";
@@ -187,6 +211,22 @@ function imageId(id) {
     elem.setAttribute("onclick", "putOnTable(this.id)");
     document.getElementById("appratus_area").appendChild(elem);
 }
+
+function isdone(i) {
+    if (iscompleted[i] == 1) {
+        alert("Your have done wrong procedure, You need to restart simulator");
+        document.getElementById("repeatAgain").click();
+        return;
+    }
+    for (j = 0; j < i; j++) {
+        if (iscompleted[j] == 0) {
+            alert("Your have done wrong procedure, You need to restart simulator");
+            document.getElementById("repeatAgain").click();
+            break;
+        }
+    }
+}
+
 
 
 if (!localStorage.repeatCount) {
