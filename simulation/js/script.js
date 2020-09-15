@@ -113,7 +113,7 @@ document.getElementById("next").addEventListener("click", function() {
                 document.getElementById("ouputValue").style.display = "block";
                 document.getElementById("ouputValue").innerHTML = result[localStorage.repeatCount - 1];
                 if (localStorage.repeatCount === "5") {
-                    process.innerHTML = "heat and cold";
+                    process.innerHTML = "Remaining solution to be kept on water bath at 60.c for 10 min and cool down then repeat steps for calculating v∞.";
                 }
                 if (localStorage.repeatCount === "6") {
 
