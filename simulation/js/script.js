@@ -114,7 +114,11 @@ document.getElementById("next").addEventListener("click", function() {
             setTimeout(function() {
                 document.getElementById("animation_burette").setAttribute("src", "./images/objects/burette/image_part_017.png");
                 document.getElementById("repeatAgain").style.display = "block";
-                process.innerHTML = "Repeat process " + (6 - localStorage.repeatCount) + " times.";
+                if (localStorage.repeatCount < 6) {
+                    process.innerHTML = "Repeat process " + (6 - localStorage.repeatCount) + " times.";
+                } else {
+                    process.innerHTML = "Experiment is completed.";
+                }
                 document.getElementById("ouputValue").style.display = "block";
                 document.getElementById("ouputValue").innerHTML = result[localStorage.repeatCount - 1];
                 if (localStorage.repeatCount === "5") {
