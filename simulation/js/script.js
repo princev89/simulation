@@ -7,7 +7,9 @@ var processno = 1;
 const doc = document.querySelector("body").innerHTML;
 
 function startSimulator() {
-    // localStorage.repeatCount++;
+    if (processno > 1) {
+        fastForward();
+    }
     document.getElementById("back").innerHTML = `Step No: ` + processno;
     document.getElementById("animation_burette").style.display = "none";
     document.getElementById("repeatAgain").style.display = "none";
@@ -54,7 +56,7 @@ function ethyleacitate() {
     if (isdone(4)) {
         iscompleted[4] = 1;
         document.getElementById("ethyleacitate").classList.toggle("ethyleacitate_bottle_animation");
-        process.innerHTML = "Stlr the mixture";
+        process.innerHTML = "Stirr the mixture";
         next.innerHTML = "Stirr mixture";
         next.classList.toggle("stlr");
     } else {
@@ -266,7 +268,6 @@ function imageId(id) {
 function isdone(i) {
     for (j = 0; j < i; j++) {
         if (iscompleted[j] == 0 || iscompleted[i] == 1) {
-            // window.reload();
             processno--;
             alert("Your have done wrong procedure, You need to restart simulator");
             return false;
@@ -277,14 +278,7 @@ function isdone(i) {
 
 
 
-if (!localStorage.repeatCount) {
-    localStorage.setItem("repeatCount", 0);
-} else if (localStorage.repeatCount === 6) {
-    localStorage.setItem("repeatCount", 0);
-}
-// step = prompt("Enter the step number, If start new experment enter 1");
-// localStorage.setItem("repeatCount", step);
-// if (step > 1) startSimulator();
+
 var start_btn = document.getElementById("start_button");
 
 
@@ -306,6 +300,9 @@ function getStepValue() {
         document.getElementById("back").innerHTML = `Step No: ` + processno;
 
     }
+    if (processno > 1) {
+        fastForward();
+    }
     document.getElementById("back").innerHTML = `Step No: ` + processno;
 }
 
@@ -313,7 +310,6 @@ function getStepValue() {
 
 
 function reload() {
-    // document.getElementById("alert-div").style.display = "block";
     processno++;
     if (processno > 6) {
         document.getElementById("repeatAgain").style.display = "none";
@@ -351,4 +347,27 @@ if (processno == 1) {
 } else {
     document.getElementById("experiment_value").style.display = "inline-block";
 
+}
+
+var listref = document.querySelector("#appratus_area");
+
+function fastForward() {
+    setTimeout(function() {
+        document.getElementById("add_appratus").click(),
+            document.getElementById("burette_icon").click(),
+            document.getElementById("conical_flask").click(),
+            document.getElementById("hcl_bottle_icon").click(),
+            document.getElementById("ethyleacitate_icon").click(),
+            document.getElementById("naoh_icon").click(),
+            document.getElementById("reagent_bottle_icon").click(),
+            document.getElementById("add_appratus_ok").click(),
+            listref.getElementsByTagName("img")[5].click(),
+            listref.getElementsByTagName("img")[2].click(),
+            document.getElementById("hcl_bottle").click(),
+            listref.getElementsByTagName("img")[3].click(),
+            document.getElementById("ethyleacitate").click(),
+            document.getElementById("next").click(),
+            listref.getElementsByTagName("img")[1].click(),
+            document.getElementById("next").click()
+    }, 0);
 }
