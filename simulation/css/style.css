@@ -109,11 +109,16 @@ nav button,
     font-family: sans-serif;
 }
 
-span {
+#process span {
     color: #ffc93c;
     font-size: 1.3rem;
     font-weight: bold;
     font-family: sans-serif;
+}
+
+span {
+    font-size: large;
+    font-weight: 600px;
 }
 
 button {
@@ -237,6 +242,7 @@ button {
 }
 
 #hcl_bottle {
+    display: none;
     bottom: 25px;
 }
 
@@ -694,7 +700,7 @@ button:active {
     box-shadow: 0px 2px 15px black;
     border-radius: 10px;
     top: 10px;
-    display: grid;
+    display: none;
     justify-content: center;
     left: 30%;
 }
@@ -720,4 +726,27 @@ button:active {
     font-size: 22px;
     outline: none;
     padding: 0px 10px;
+}
+
+#t {
+    display: none;
+}
+
+table:hover #t {
+    display: block;
+}
+
+#experiment_table_hover {
+    position: absolute;
+    z-index: 999;
+    height: auto;
+    width: 300px;
+    text-align: center;
+    background-color: #5ccae6fd;
+    box-shadow: 0px 2px 15px black;
+    border-radius: 10px;
+    top: 10px;
+    justify-content: center;
+    left: 30%;
+    display: none;
 }
