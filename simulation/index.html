@@ -4,9 +4,8 @@
 <head>
     <title>CHEMISTERY EXPERIMENT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <meta name="viewport" content="width=1024"> -->
+    <meta name="viewport" content="width=1024">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 
@@ -26,10 +25,12 @@
         <button onclick="getStepValue()">OK
         </button>
     </div>
+    <div onload="printTableValue()" id="experiment_table_hover">
 
+    </div>
     <div class="simulator" id="simulator">
         <nav id="simulator_nav">
-            <h3 id="experimentname">Experiment Name</h3>
+            <h3 id="experimentname">To determine the rate constant of the hydrolysis of Ethyl acetate using an acid as acatalyst.</h3>
             <div class="p-mega-menu-container">
                 <!-- Item -->
 
@@ -38,7 +39,7 @@
                 <div class="p-mega-menu-trigger">
                     <!-- The trigger item's content -->
                     <div>
-                        <button id="add_appratus">ADD Appratus</button>
+                        <button id="add_appratus" onclick="addAppratus()">ADD Appratus</button>
                     </div>
 
                     <!-- Mega menu -->
@@ -65,7 +66,7 @@
                                 <label>Reagent Bottle</label>
                                 <img width="100px" height="100px" id="reagent_bottle_icon" onclick="imageId(this.id);" src="./images/icons/reagent_bottle_icon.png" alt="">
                             </div>
-                            <button id="add_appratus_ok">OK</button>
+                            <button id="add_appratus_ok" onclick="addAppratusOk()">OK</button>
                         </div>
                     </div>
                 </div>
@@ -74,7 +75,9 @@
                     <!-- The trigger item's content -->
                     <div>
 
-                        <button id="back">Back</button>
+                        <button id="back" onclick="back()">Step No: </button>
+                        <button onclick="displayTableValue()" id="experiment_value">Experiment Values</button>
+
                     </div>
 
 
@@ -100,17 +103,16 @@
     ">
                 <p id="process"></p>
                 <p id="ouputValue" style="position: absolute; left: 50%; display: none; border: 1px solid black; background-color: white; color: red; border-radius: 3px; padding: 4px 10px;">this is text</p>
-                <button id="next" class=""></button>
-                <button id="repeatAgain" onclick="window.location.reload()">Repeat Again</button>
+                <button id="next" onclick="nextStep()" class=""></button>
+                <button id="repeatAgain" onclick="reload()">Repeat Again</button>
 
                 <div id="objects">
-                    <meta id="meta" name="viewport" content="width=1024">
                     <img src="./images/objects/peppet/image_part_001.png" id="peppet" alt="">
                     <!-- burette -->
                     <img src="./images/objects/burette/image_part_007.png" id="animation_burette" alt="">
                     <img src="./images/objects/burette/image_part_001.png" id="burette" class="" alt="">
                     <!-- ethyleacitate flask  -->
-                    <img src="./images/objects/ethyleacitate.png" id="ethyleacitate" class="" alt="">
+                    <img src="./images/objects/ethyleacitate.png" id="ethyleacitate" onclick="ethyleacitate()" class="" alt="">
                     <!-- conicak flask png -->
 
                     <img src="./images/objects/conical_flask/image_part_006.png" id="conical_flask_png" class="" alt="">
@@ -121,28 +123,28 @@
 
                     <img src="./images/objects/reagent_bottle.png" id="reagentbottle" class="" alt="">
                     <!-- hcl bottle  -->
-                    <img src="./images/objects/hcl_bottle.png" id="hcl_bottle" class="" alt="">
+                    <img src="./images/objects/hcl_bottle.png" id="hcl_bottle" onclick="hclBottle()" class="" alt="">
                 </div>
                 <div id="graph_div" onload="drawChart()">
 
-                    <section style="display: flex;">
-                        <span style="float: left;padding-left: 0px">
+                    <section style="display: grid; margin: 20px;">
+                        <span style="float: left;padding-left: 0px; color: black;">
                       <table>
                         <tr>
                           <th>Time (min)</th>
                           <th>Volume of solution</th>
                           <th>Titre value(ml)</th>
-                          <th>(V∞-Vt)</th>
-                          <th>Log((V∞-Vt))</th>
-                          <th>Rate of Constant(k)</th>
+                          <th>(V<sub>∞</sub>-V<sub>t</sub>)</th>
+                          <th>Log((V<sub>∞</sub> - V<sub>t</sub>)</th>
+                          <th id="t">Rate of Constant(k)</th>
                         </tr>
                         <tr>
                           <td>0</td>
                           <td>10</td>
-                          <td>0.2(V0)</td>
+                          <td>0.2(V<sub>0</sub>)</td>
                           <td>19.1</td>
                           <td>1.28</td>
-                          <td style="background-color: red">19.1</td>
+                          <td id="t" style="background-color: red">19.1 (ingnored)</td>
                         </tr>
                         <tr>
                           <td>10</td>
@@ -150,7 +152,7 @@
                           <td>5.0</td>
                           <td>14.3</td>
                           <td>1.155</td>
-                          <td>0.288</td>
+                          <td id="t">0.288</td>
                         </tr>
                         <tr>
                           <td>20</td>
@@ -158,7 +160,7 @@
                           <td>7.2</td>
                           <td>12.1</td>
                           <td>1.083</td>
-                          <td>0.281</td>
+                          <td id="t">0.281</td>
                         </tr>
                         <tr>
                           <td>30</td>
@@ -166,7 +168,7 @@
                           <td>11.1</td>
                           <td>8.2</td>
                           <td>0.914</td>
-                          <td>0.25</td>
+                          <td id="t">0.25</td>
                         </tr>
                         <tr>
                           <td>40</td>
@@ -174,29 +176,39 @@
                           <td>13.2</td>
                           <td>6.1</td>
                           <td>0.785</td>
-                          <td>0.28</td>
+                          <td id="t">0.28</td>
                         </tr>
                         <tr>
                           <td>60</td>
                           <td>10</td>
-                          <td>19.3(V∞)</td>
+                          <td>19.3(V<sub>∞</sub>)</td>
                           <td>--</td>
                           <td>--</td>
-                          <td>--</td>
+                          <td id="t">--</td>
                         </tr>
                       </table>
                   </span>
                         <span style="float: left;padding-left: 30px">
-                      <p style="font-size: 20px"><span style="font-weight: bold;">V0:</span><span>Initial Volume</span></p>
-                        <p style="font-size: 20px"><span style="font-weight: bold;">Vt:</span><span>Volume at time "t"</span></p>
-                        <p style="font-size: 20px"><span style="font-weight: bold;">V∞:</span><span>Volume at time 60 min</span></p>
-                        <p style="font-size: 20px"><span style="font-weight: bold;">Rate Contant(k):</span><span>2.303*log((V∞-V0)/(V∞-Vt))/t</span></p>
+                      <p style="font-size: 20px"><span style="font-weight: bold;">V<sub>0</sub>:</span><span>Initial Volume</span></p>
+                        <p style="font-size: 20px"><span style="font-weight: bold;">V<sub>t</sub>:</span><span>Volume at time "t"</span></p>
+                        <p style="font-size: 20px"><span style="font-weight: bold;">V<sub>∞</sub>:</span><span>Volume at time 60 min</span></p>
+                        <p style="font-size: 20px"><span style="font-weight: bold;">Calculate Rate Contant(k) using this formula :</span><span>(2.303/t) * ( log((V<sub>∞</sub>-V<sub>0</sub>)/(V<sub>∞</sub>-V<sub>t</sub>))/t )</span></p>
                         </span>
                     </section>
                     <img style="margin-left: 100px;" src="./images/graph.png" alt="">
+                    <div style="margin: 10px 40px;">
+                        <h1>Conclusion:</h1>
+                        <p>In conclusion ,it can be seen from this experiment that rate of reaction is concentation dependent while rate constant is not.Also ,that the rate constant for the hydrolysis of ethyl acetate with sodium hydroxide using HCl as a
+                            catalyst at 28 C is approximately 0.274min^-1</p>
+                        <br>
+                        <h1>Result:</h1>
+                        <p>The rate constant for the hydrolysis of an easter from- 1.Calculated value= <span style="color: green;">0.274</span></p>
+                    </div>
                     <div id="linechart_material"></div>
                 </div>
                 <img id="table" src="./images/objects/table.png" class="" alt="">
+
+
             </main>
 
 
